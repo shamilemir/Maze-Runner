@@ -14,38 +14,46 @@ import org.apache.commons.cli.ParseException;
 public class Main {
 
     private static final Logger logger = LogManager.getLogger();
-    public static String MAZE_FILEPATH;
+    public static String MAZE_FILE;
+    public static String INPUT_PATH;
 
     public static void main(String[] args) {
 
         Options options = new Options();
-        options.addOption("i", true, "Maze Filepath");
+        options.addOption("i", true, "Maze file");
+        options.addOptions("p", true, "Input path");
         CommandLineParser parser = new DefaultParser();
 
         logger.info("** Starting Maze Runner");
         try {
 
             CommandLine cmd = parser.parse(options, args);
-            MAZE_FILEPATH = cmd.getOptionValue("i");
-            logger.info("**** Reading the maze from file " + MAZE_FILEPATH);
+            MAZE_FILE = cmd.getOptionValue("i");
+            INPUT_PATH = cmd.getOptionValue("p");
 
-            BufferedReader reader = new BufferedReader(new FileReader(MAZE_FILEPATH));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        System.out.print("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        System.out.print("PASS ");
-                    }
-                }
-                System.out.print(System.lineSeparator());
+            logger.info("**** Solving the maze from file " + MAZE_FILE);
+
+            MazeSolver solver = new MazeSolver(MAZE_FILE, INPUT_PATH);
+            int entryCoord = solver.findEntry();
+            char[][] mazeArray = solver.getMazeArray();
+            solver.fillMazeArray(mazeArray);
+
+            String correctPath = solver.solve(mazeArray, entryCoord);
+
+            if (INPUT_PATH == null) {
+                System.out.print("The correct path is " + correctPath);
+            }
+            else if (INPUT_PATH.equals(correctPath)) {
+                System.out.print("The given path is correct");
+            }
+            else {
+                System.out.print("The given path is NOT correct");
             }
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\ {}", e.getMessage(), e);
         }
-        logger.info("**** Computing path");
-        logger.info("PATH NOT COMPUTED");
+
         logger.info("** End of MazeRunner");
+
     }
 }
