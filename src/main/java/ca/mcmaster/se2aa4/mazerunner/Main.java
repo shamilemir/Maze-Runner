@@ -33,12 +33,9 @@ public class Main {
 
             logger.info("**** Solving the maze from file " + MAZE_FILE);
 
-            MazeSolver solver = new MazeSolver(MAZE_FILE, INPUT_PATH);
-            int entryCoord = solver.findEntry();
-            char[][] mazeArray = solver.getMazeArray();
-            solver.fillMazeArray(mazeArray);
+            MazeSolver solver = new MazeSolver(new ArrayMaker(MAZE_FILE), new Navigator(new StringBuilder()));
 
-            String correctPath = solver.solve(mazeArray, entryCoord);
+            String correctPath = solver.solve();
 
             if (INPUT_PATH == null) {
                 System.out.print("The correct path is " + correctPath);
