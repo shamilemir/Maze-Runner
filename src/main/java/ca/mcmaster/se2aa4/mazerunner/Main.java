@@ -38,13 +38,13 @@ public class Main {
             String correctPath = solver.solve();
 
             if (INPUT_PATH == null) {
-                System.out.print("The correct path is " + correctPath);
+                System.out.println("The correct path is " + correctPath);
             }
             else if (INPUT_PATH.equals(correctPath)) {
-                System.out.print("The given path is correct");
+                System.out.println("The given path is correct");
             }
             else {
-                System.out.print("The given path is NOT correct");
+                System.out.println("The given path is NOT correct");
             }
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\ {}", e.getMessage(), e);

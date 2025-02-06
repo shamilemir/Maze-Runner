@@ -15,22 +15,23 @@ public class MazeSolver {
         while (!navigator.finishedMaze()) {
             if (navigator.rightSpaceOpen()){
                 navigator.turnRight();
-                path.append(" R");
+                path.append("R");
             }
             else if (navigator.frontSpaceOpen()){
                 //do nothing, break 'if' statement
             }
             else if (navigator.leftSpaceOpen()){
                 navigator.turnLeft();
-                path.append(" L");
+                path.append("L");
             }
             else {
                 //turn around
                 navigator.turnLeft();
                 navigator.turnLeft();
-                path.append(" LL");
+                path.append("LL");
             }
             navigator.moveForward();
+            path.append("F");
         }
         return path.toString();
     }

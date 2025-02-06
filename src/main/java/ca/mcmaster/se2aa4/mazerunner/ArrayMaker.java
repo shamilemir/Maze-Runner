@@ -29,7 +29,7 @@ public class ArrayMaker {
             String line = reader.readLine();
             
             int xLength = line.length();
-            int yLength = -1;
+            int yLength = 0;
 
             // switched from while loop to just use one 'line' String
             do {

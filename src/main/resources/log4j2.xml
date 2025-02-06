@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO"> 
-<!-- OFF -->
+<Configuration status="OFF"> 
+<!-- "INFO" to enable -->
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="[%-5level] %logger{0} %msg%n" />
@@ -8,8 +8,8 @@
     </Appenders>
 
     <Loggers>
-        <Root level="info">
-        <!-- OFF -->
+        <Root level="OFF">
+        <!-- "info" to enable -->
             <AppenderRef ref="console" />
         </Root>
     </Loggers>
