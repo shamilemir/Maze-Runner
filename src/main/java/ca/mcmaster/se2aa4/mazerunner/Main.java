@@ -1,8 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.cli.CommandLine;
@@ -21,7 +18,7 @@ public class Main {
 
         Options options = new Options();
         options.addOption("i", true, "Maze file");
-        options.addOptions("p", true, "Input path");
+        options.addOption("p", true, "Input path");
         CommandLineParser parser = new DefaultParser();
 
         logger.info("** Starting Maze Runner");
@@ -33,7 +30,10 @@ public class Main {
 
             logger.info("**** Solving the maze from file " + MAZE_FILE);
 
-            MazeSolver solver = new MazeSolver(new ArrayMaker(MAZE_FILE), new Navigator(new StringBuilder()));
+            ArrayMaker arrayMaker = new ArrayMaker(MAZE_FILE);
+            char[][] mazeArray = arrayMaker.prepareMaze();
+
+            MazeSolver solver = new MazeSolver(new Navigator(mazeArray), new StringBuilder());
 
             String correctPath = solver.solve();
 
