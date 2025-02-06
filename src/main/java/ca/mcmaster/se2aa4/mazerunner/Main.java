@@ -30,21 +30,26 @@ public class Main {
 
             logger.info("**** Solving the maze from file " + MAZE_FILE);
 
+            //setup
             ArrayMaker arrayMaker = new ArrayMaker(MAZE_FILE);
             char[][] mazeArray = arrayMaker.prepareMaze();
+            Navigator navigator = new Navigator(mazeArray);
+            PathFactorizer pathFactorizer = new PathFactorizer(new StringBuilder());
 
-            MazeSolver solver = new MazeSolver(new Navigator(mazeArray), new StringBuilder());
+            //declarations
+            MazeSolver rightHandSolver = new RightHandSolver(navigator, new StringBuilder(), pathFactorizer);
+            String correctPath;
 
-            String correctPath = solver.solve();
+            MazeSolver inputSolver = new InputSolver(navigator, INPUT_PATH, pathFactorizer);
+            String confirmation;
 
             if (INPUT_PATH == null) {
-                System.out.println("The correct path is " + correctPath);
-            }
-            else if (INPUT_PATH.equals(correctPath)) {
-                System.out.println("The given path is correct");
+                correctPath = rightHandSolver.solve();
+                System.out.println("The correct path is " + correctPath); //factorized path
             }
             else {
-                System.out.println("The given path is NOT correct");
+                confirmation = inputSolver.solve();
+                System.out.println("The given path is " + confirmation); //correct or not correct
             }
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\ {}", e.getMessage(), e);

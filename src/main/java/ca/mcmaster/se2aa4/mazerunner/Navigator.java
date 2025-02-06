@@ -83,4 +83,9 @@ public class Navigator {
         return false;
     }
 
+    public void resetPosition() {
+        yCoord = findEntry(mazeArray);
+        xCoord = 0;
+    }
+
 }
