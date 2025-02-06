@@ -1,5 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class PathFactorizer {
 
     private StringBuilder factorizedPath;
@@ -14,10 +17,10 @@ public class PathFactorizer {
         for (int i = 0; i < path.length(); i++) {
             if (i == path.length() - 1) {
                 freq++;
-                smartAppend(freq, path.charAt(i));
+                factorizeAppend(freq, path.charAt(i));
             }
             else if (path.charAt(i) == ' ') {
-                smartAppend(freq, path.charAt(i-1));
+                factorizeAppend(freq, path.charAt(i-1));
                 freq = 0;
             }
             else {
@@ -29,13 +32,7 @@ public class PathFactorizer {
 
     }
 
-    public void unfactorize(String path) {
-
-        
-        
-    }
-
-    public void smartAppend(int freq, char c) {
+    public void factorizeAppend(int freq, char c) {
         if (freq == 1) {
             factorizedPath.append(c).append(" ");
         }

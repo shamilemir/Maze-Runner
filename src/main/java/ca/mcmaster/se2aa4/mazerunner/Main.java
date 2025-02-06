@@ -33,14 +33,22 @@ public class Main {
             //setup
             ArrayMaker arrayMaker = new ArrayMaker(MAZE_FILE);
             char[][] mazeArray = arrayMaker.prepareMaze();
-            Navigator navigator = new Navigator(mazeArray);
+
+            TargetFinder targetFinder = new TargetFinder();
+            int startYCoord = targetFinder.findTarget(mazeArray, Checkpoint.ENTRY);
+
+            int exitYCoord = targetFinder.findTarget(mazeArray, Checkpoint.EXIT);
+            int exitXCoord = mazeArray[0].length - 1;
+
+            Navigator navigator = new Navigator(mazeArray, startYCoord);
+
             PathFactorizer pathFactorizer = new PathFactorizer(new StringBuilder());
 
             //declarations
-            MazeSolver rightHandSolver = new RightHandSolver(navigator, new StringBuilder(), pathFactorizer);
+            MazeSolver rightHandSolver = new RightHandSolver(navigator, new StringBuilder(), pathFactorizer, exitXCoord);
             String correctPath;
 
-            MazeSolver inputSolver = new InputSolver(navigator, INPUT_PATH, pathFactorizer);
+            MazeSolver inputSolver = new InputSolver(navigator, INPUT_PATH, exitXCoord, exitYCoord);
             String confirmation;
 
             if (INPUT_PATH == null) {

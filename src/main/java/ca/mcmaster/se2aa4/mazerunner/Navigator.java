@@ -4,8 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Navigator {
-
-    private static final Logger logger = LogManager.getLogger();
+    
     private char[][] mazeArray;
     private Direction direction;
     private int yCoord;
@@ -14,28 +13,11 @@ public class Navigator {
     private int tempX = 0;
     private int tempY = 0;
 
-    public Navigator(char[][] mazeArray) {
+    public Navigator(char[][] mazeArray, int yCoord) {
         this.mazeArray = mazeArray;
         this.direction = Direction.EAST; //start from left
-        this.yCoord = findEntry(mazeArray);
+        this.yCoord = yCoord;
         this.xCoord = 0;
-    }
-
-
-    public int findEntry(char[][] mazeArray) {
-
-        int entryCoord = 0;
-
-        for (int i = 0; i < mazeArray.length; i++) {
-            if (mazeArray[i][0] == ' ') {
-                return entryCoord;
-            }
-            entryCoord++;
-        }
-
-        logger.info("Faulty maze: no entry point");
-        return -1;
-        
     }
 
     public void turnRight() {
@@ -75,17 +57,19 @@ public class Navigator {
         }
         return false;
     }
-    public boolean finishedMaze() {
-        //exitY not relevant, all other tiles are walls at the end
-        if (xCoord == mazeArray[0].length - 1) {
+    public boolean insideWall() {
+        if (mazeArray[yCoord][xCoord] == '#') {
             return true;
         }
         return false;
     }
 
-    public void resetPosition() {
-        yCoord = findEntry(mazeArray);
-        xCoord = 0;
+    public int getXCoord() {
+        return xCoord;
+    }
+
+    public int getYCoord() {
+        return yCoord;
     }
 
 }

@@ -1,20 +1,25 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class RightHandSolver implements MazeSolver {
 
     private Navigator navigator;
     private StringBuilder path;
     private PathFactorizer pathFactorizer;
+    private int exitXCoord;
 
-    public RightHandSolver(Navigator navigator, StringBuilder path, PathFactorizer pathFactorizer) {
+    public RightHandSolver(Navigator navigator, StringBuilder path, PathFactorizer pathFactorizer, int exitXCoord) {
         this.navigator = navigator;
         this.path = path;
         this.pathFactorizer = pathFactorizer;
+        this.exitXCoord = exitXCoord;
     }
 
 
     public String solve() {
-        while (!navigator.finishedMaze()) {
+        while (!finishedMaze()) {
             if (navigator.rightSpaceOpen()){
                 navigator.turnRight();
                 path.append(" R ");
@@ -37,7 +42,14 @@ public class RightHandSolver implements MazeSolver {
         }
         String pathAsString = path.toString();
         return pathFactorizer.factorize(pathAsString);
+    }
 
+    public boolean finishedMaze() {
+        //exitY not relevant, all other tiles are walls at the end
+        if (navigator.getXCoord() == exitXCoord) {
+            return true;
+        }
+        return false;
     }
 
 }

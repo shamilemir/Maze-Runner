@@ -4,4 +4,6 @@ interface MazeSolver {
 
     String solve();
 
+    boolean finishedMaze();
+
 }
