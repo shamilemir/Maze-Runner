@@ -41,4 +41,26 @@ public class PathFactorizer {
         }
     }
 
+    public String unfactorize(String path) {
+
+        int freq = 1;
+        for (int i = 0; i < path.length(); i++) {
+            if (Character.isDigit(path.charAt(i))) {
+                freq = Character.getNumericValue(path.charAt(i));
+            }
+            else if (path.charAt(i) == ' ') {
+                //do nothing
+            }
+            else { //if a letter
+                for (int j = 0; j < freq; j++) {
+                    factorizedPath.append(path.charAt(i));
+                }
+                factorizedPath.append(" ");
+                freq = 1;
+            }
+        }
+
+        return factorizedPath.toString();
+    }
+
 }

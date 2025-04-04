@@ -48,7 +48,7 @@ public class Main {
             MazeSolver rightHandSolver = new RightHandSolver(navigator, new StringBuilder(), pathFactorizer, exitXCoord);
             String correctPath;
 
-            MazeSolver inputSolver = new InputSolver(navigator, INPUT_PATH, exitXCoord, exitYCoord);
+            MazeSolver inputSolver = new InputSolver(navigator, INPUT_PATH, pathFactorizer, exitXCoord, exitYCoord);
             String confirmation;
 
             if (INPUT_PATH == null) {
