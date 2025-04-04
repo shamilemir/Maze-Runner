@@ -28,7 +28,7 @@ public class PathFactorizer {
             }
         }
 
-        return factorizedPath.toString();
+        return getPathString();
 
     }
 
@@ -60,6 +60,10 @@ public class PathFactorizer {
             }
         }
 
+       return getPathString();
+    }
+
+    public String getPathString() {
         return factorizedPath.toString();
     }
 
