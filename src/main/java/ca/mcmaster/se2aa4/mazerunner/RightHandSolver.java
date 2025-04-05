@@ -1,5 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import ca.mcmaster.se2aa4.mazerunner.Commands.*;
+import ca.mcmaster.se2aa4.mazerunner.States.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,36 +11,24 @@ public class RightHandSolver implements MazeSolver {
     private StringBuilder path;
     private PathFactorizer pathFactorizer;
     private int exitXCoord;
+    private State state;
+
+    private TurnLeftCommand turnLeftCommand = new TurnLeftCommand();
+    private TurnRightCommand turnRightCommand = new TurnRightCommand();
+    private MoveForwardCommand moveForwardCommand = new MoveForwardCommand();
 
     public RightHandSolver(Navigator navigator, StringBuilder path, PathFactorizer pathFactorizer, int exitXCoord) {
         this.navigator = navigator;
         this.path = path;
         this.pathFactorizer = pathFactorizer;
         this.exitXCoord = exitXCoord;
+        this.state = new rightOpenState(this, navigator, path);
     }
 
 
     public String solve() {
         while (!finishedMaze()) {
-            if (navigator.rightSpaceOpen()){
-                navigator.turnRight();
-                path.append(" R ");
-            }
-            else if (navigator.frontSpaceOpen()){
-                //do nothing, break 'if' statement
-            }
-            else if (navigator.leftSpaceOpen()){
-                navigator.turnLeft();
-                path.append(" L ");
-            }
-            else {
-                //turn around
-                navigator.turnLeft();
-                navigator.turnLeft();
-                path.append(" LL ");
-            }
-            navigator.moveForward();
-            path.append("F");
+            state.move();
         }
         String pathAsString = path.toString();
         return pathFactorizer.factorize(pathAsString);
@@ -50,6 +40,20 @@ public class RightHandSolver implements MazeSolver {
             return true;
         }
         return false;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public Command getLeftCommand() {
+        return turnLeftCommand;
+    }
+    public Command getRightCommand() {
+        return turnRightCommand;
+    }
+    public Command getForwardCommand() {
+        return moveForwardCommand;
     }
 
 }

@@ -1,5 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import ca.mcmaster.se2aa4.mazerunner.Commands.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,6 +11,10 @@ public class InputSolver implements MazeSolver {
     private PathFactorizer pathFactorizer;
     private int exitXCoord;
     private int exitYCoord;
+
+    private TurnLeftCommand turnLeftCommand = new TurnLeftCommand();
+    private TurnRightCommand turnRightCommand = new TurnRightCommand();
+    private MoveForwardCommand moveForwardCommand = new MoveForwardCommand();
 
     public InputSolver(Navigator navigator, String inputPath, PathFactorizer pathFactorizer, int exitXCoord, int exitYCoord) {
         this.navigator = navigator;
@@ -29,13 +34,13 @@ public class InputSolver implements MazeSolver {
             current = inputPath.charAt(i);
             //did i mention he hates switch cases
             if (current == 'F') {
-                navigator.moveForward();
+                navigator.setCommand(moveForwardCommand);
             }
             else if (current == 'R') {
-                navigator.turnRight();
+                navigator.setCommand(turnRightCommand);
             }
             else if (current == 'L') {
-                navigator.turnLeft();
+                navigator.setCommand(turnLeftCommand);
             }
             else {
                 //do nothing if space

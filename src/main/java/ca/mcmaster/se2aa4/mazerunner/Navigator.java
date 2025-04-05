@@ -1,5 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import ca.mcmaster.se2aa4.mazerunner.Commands.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +14,8 @@ public class Navigator {
     private int tempX = 0;
     private int tempY = 0;
 
+    private Command command;
+
     public Navigator(char[][] mazeArray, int yCoord) {
         this.mazeArray = mazeArray;
         this.direction = Direction.EAST; //start from left
@@ -20,15 +23,13 @@ public class Navigator {
         this.xCoord = 0;
     }
 
-    public void turnRight() {
-        direction = direction.getRightDirection();
+    public void setCommand(Command command) {
+        this.command = command;
+        executeCommand();
     }
-    public void turnLeft() {
-        direction = direction.getLeftDirection();
-    }
-    public void moveForward() {
-        xCoord += direction.getXMove();
-        yCoord += direction.getYMove();
+
+    public void executeCommand() {
+        command.execute(this);
     }
 
     //temps are global for memory efficiency
@@ -67,9 +68,20 @@ public class Navigator {
     public int getXCoord() {
         return xCoord;
     }
-
     public int getYCoord() {
         return yCoord;
+    }
+    public Direction getDirection() {
+        return direction;
+    }
+    public void setXCoord(int xCoord) {
+        this.xCoord = xCoord;
+    }
+    public void setYCoord(int yCoord) {
+        this.yCoord = yCoord;
+    }
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
 }

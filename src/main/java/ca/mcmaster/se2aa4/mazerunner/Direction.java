@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 //not the most memory efficient way
 //but this prof hates switch cases
-enum Direction {
+public enum Direction {
     NORTH(null, null, 0, -1), //you need to SUBTRACT to go up in array
     EAST(null, null, 1, 0), 
     SOUTH(null, null, 0, 1), 
